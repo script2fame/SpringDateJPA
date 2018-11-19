@@ -1,8 +1,5 @@
 package com.hungteshun.repository;
 
-import java.util.Arrays;
-import java.util.List;
-
 import com.hungteshun.dao.Employee;
 import org.junit.After;
 import org.junit.Before;
@@ -13,6 +10,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author hungteshun
@@ -36,6 +37,19 @@ public class EmployeeRepositoryTest {
     public void tearDown() throws Exception {
         ctx = null;
         System.out.println("将spring上线文销毁操作");
+    }
+
+    @Test
+    public void testInsert() {
+        List<Employee> employees = new ArrayList<Employee>();
+        Employee employee = null;
+        for (int i = 1; i <= 100; i++) {
+            employee = new Employee();
+            employee.setName("hungteshun" + i);
+            employee.setAge(i);
+            employees.add(employee);
+        }
+        employeeRepository.save(employees);
     }
 
     @Test
@@ -112,7 +126,7 @@ public class EmployeeRepositoryTest {
     }
 
     @Test
-    public void testExists(){
+    public void testExists() {
         Employee employee = employeeRepository.findOne(1);
         System.out.println(employee);
         boolean exists = employeeRepository.exists(1);
